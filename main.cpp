@@ -2,8 +2,12 @@
 #include <GL/glut.h>
 #include <stdlib.h>
 #include <math.h>
+#include <ctime>
+#include<iostream>
 
 #define PI 3.1416
+
+using namespace std;
 
 static float	tx	=  0.0;
 static float	ty	=  0.0;
@@ -72,7 +76,7 @@ void init(void)
 	glOrtho(-50.0, 50.0, -50.0, 50.0, -50.0, 50.0);
 }
 
-
+//Circle Creation Code
 void circle(float radius_x, float radius_y)
 {
 	int i = 0;
@@ -85,7 +89,6 @@ void circle(float radius_x, float radius_y)
 			angle = 2 * PI * i / 100;
 			glVertex3f (cos(angle) * radius_x, sin(angle) * radius_y, 0);
 		}
-
 	glEnd();
 }
 
@@ -108,9 +111,97 @@ void Pin(){
         glEnd();
     glPopMatrix();
 }
+void bubble_Animate(){
+
+        circle_00_y+=0.06;
+
+        circle_01_y+=0.04;
+        circle_02_y+=0.01;
+        circle_03_y+=0.02;
+        circle_04_y+=0.04;
+        circle_011_y+=0.02;
+        circle_012_y+=0.03;
+        circle_013_y+=0.03;
+        circle_014_y+=0.02;
+        circle_015_y+=0.02;
+
+        circle_01_y_+=0.01;
+        circle_02_y_+=0.01;
+        circle_03_y_+=0.02;
+        circle_04_y_+=0.02;
+        circle_011_y_+=0.01;
+        circle_012_y_+=0.02;
+        circle_013_y_+=0.01;
+        circle_014_y_+=0.03;
+        circle_015_y_+=0.01;
+
+        if(circle_00_y>55){
+            circle_00_y=-70;
+        }
+        //#### upper row
+        if(circle_01_y>55){
+            circle_01_y=-65;
+        }
+        if(circle_02_y>58){
+            circle_02_y=-60;
+        }
+        if(circle_03_y>70){
+            circle_03_y=-70;
+        }
+        if(circle_04_y>65){
+            circle_04_y=-70;
+        }
+
+        if(circle_011_y>55){
+            circle_011_y=-65;
+        }
+        if(circle_012_y>58){
+            circle_012_y=-60;
+        }
+        if(circle_013_y>70){
+            circle_013_y=-60;
+        }
+        if(circle_014_y>65){
+            circle_014_y=-60;
+        }
+        if(circle_015_y>65){
+            circle_015_y=-60;
+        }
+        //###lower row
+        if(circle_01_y_>55){
+            circle_01_y_=-65;
+        }
+        if(circle_02_y_>58){
+            circle_02_y_=-60;
+        }
+        if(circle_03_y_>70){
+            circle_03_y_=-60;
+        }
+        if(circle_04_y_>65){
+            circle_04_y_=-60;
+        }
+
+        if(circle_011_y_>55){
+            circle_011_y_=-65;
+        }
+        if(circle_012_y_>58){
+            circle_012_y_=-60;
+        }
+        if(circle_013_y_>70){
+            circle_013_y_=-60;
+        }
+        if(circle_014_y_>65){
+            circle_014_y_=-60;
+        }
+        if(circle_015_y_>65){
+            circle_015_y_=-60;
+        }
+        glutPostRedisplay();
+}
 
 void bubble_Position(){
-    //middle bubble
+
+        //middle bubble
         glPushMatrix();
             glColor3f(circle_color_r1,circle_color_g1,circle_color_b1);
             glTranslated(circle_00_x,circle_00_y,0);
@@ -242,6 +333,8 @@ void display(void)
     glClear(GL_COLOR_BUFFER_BIT);
 
 	if(Game_State==true){
+
+        bubble_Animate();
         glPushMatrix();
         bubble_Position();
         Pin();
