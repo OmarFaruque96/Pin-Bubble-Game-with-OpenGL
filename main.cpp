@@ -123,24 +123,24 @@ void bubble_Animate(){
 
         circle_00_y+=0.06;
 
-        circle_01_y+=0.04;
-        circle_02_y+=0.03;
+        circle_01_y+=0.20;
+        circle_02_y+=0.09;
         circle_03_y+=0.10;
-        circle_04_y+=0.04;
+        circle_04_y+=0.09;
         circle_011_y+=0.15;
-        circle_012_y+=0.06;
-        circle_013_y+=0.05;
-        circle_014_y+=0.04;
-        circle_015_y+=0.09;
+        circle_012_y+=0.08;
+        circle_013_y+=0.16;
+        circle_014_y+=0.05;
+        circle_015_y+=0.19;
 
-        circle_01_y_+=0.04;
-        circle_02_y_+=0.05;
+        circle_01_y_+=0.19;
+        circle_02_y_+=0.12;
         circle_03_y_+=0.16;
         circle_04_y_+=0.20;
-        circle_011_y_+=0.07;
-        circle_012_y_+=0.05;
-        circle_013_y_+=0.06;
-        circle_014_y_+=0.03;
+        circle_011_y_+=0.13;
+        circle_012_y_+=0.19;
+        circle_013_y_+=0.16;
+        circle_014_y_+=0.13;
         circle_015_y_+=0.08;
 
         if(circle_00_y>55){
@@ -258,7 +258,7 @@ void bubble_Position(){
         glPopMatrix();
         //3rd bubble
         glPushMatrix();
-            glColor3f(circle_color_r4,circle_color_g4,circle_color_b4);
+            glColor3f(circle_color_r6,circle_color_g6,circle_color_b6);
             glTranslated(circle_013_x,circle_013_y,0);
             circle(circle_x5,circle_y5);
         glPopMatrix();
@@ -279,7 +279,7 @@ void bubble_Position(){
 
         //1st bubble
         glPushMatrix();
-            glColor3f(circle_color_r4,circle_color_g4,circle_color_b4);
+            glColor3f(circle_color_r6,circle_color_g6,circle_color_b6);
             glTranslated(circle_01_x_,circle_01_y_,0);
             circle(circle_x1,circle_y1);
         glPopMatrix();
@@ -342,27 +342,23 @@ void PointFunction(){
         if((circle_00_x+circle_x1 > a1) && (circle_00_y+circle_y1>b1) && (circle_00_y-circle_y1<b1) && (circle_00_x-circle_x1<a1)){
                         ++point;
                         circle_00_y=-80;
-
                 }
 
     //1st row 1st right
         else if((circle_01_x+circle_x2 > a1) && (circle_01_y+circle_y2>b1) && (circle_01_y-circle_y2<b1) && (circle_01_x-circle_x2<a1)){
                         ++point;
                         circle_01_y=-90;
-
                 }
 //2nd
        else if((circle_02_x+circle_x1 > a1) && (circle_02_y+circle_y1>b1) && (circle_02_y-circle_y1<b1) && (circle_02_x-circle_x1<a1)){
                         ++point;
                         circle_02_y=-60;
-
                 }
 //3rd
         else if((circle_03_x+circle_x3 > a1) && (circle_03_y+circle_y3>b1) && (circle_03_y-circle_y3<b1) && (circle_03_x-circle_x3<a1)){
 
                         //game over bubble
                         Game_State=false;
-
                 }
 //4th
         else if((circle_04_x+circle_x4 > a1) && (circle_04_y+circle_y4>b1) && (circle_04_y-circle_y4<b1) && (circle_04_x-circle_x4<a1)){
@@ -383,8 +379,8 @@ void PointFunction(){
                 }
 //3rd
         else if((circle_013_x+circle_x5 > a1) && (circle_013_y+circle_y5>b1) && (circle_013_y-circle_y5<b1) && (circle_013_x-circle_x5<a1)){
-                        ++point;
-                        circle_013_y=-80;
+                        //game over bubble
+                        Game_State=false;
                 }
 //4th
         else if((circle_014_x+circle_x1 > a1) && (circle_014_y+circle_y1>b1) && (circle_014_y-circle_y1<b1) && (circle_014_x-circle_x1<a1)){
@@ -396,13 +392,12 @@ void PointFunction(){
                         //game over bubble
                         Game_State=false;
                 }
-
 //2nd Row
 //1st right
 
         else if((circle_01_x_+circle_x1 > a1) && (circle_01_y_+circle_y1>b1) && (circle_01_y_-circle_y1<b1) && (circle_01_x_-circle_x1<a1)){
-                        ++point;
-                        circle_01_y_=-160;
+                        //game over bubble
+                        Game_State=false;
                 }
 //2nd
         else if((circle_02_x_+circle_x3 > a1) && (circle_02_y_+circle_y3>b1) && (circle_02_y_-circle_y3<b1) && (circle_02_x_-circle_x3<a1)){
@@ -419,10 +414,8 @@ void PointFunction(){
                         //game over bubble
                         Game_State=false;
                 }
-
 //left
 //1st
-
         else if((circle_011_x_+circle_x2 > a1) && (circle_011_y_+circle_y2>b1) && (circle_011_y_-circle_y2<b1) && (circle_011_x_-circle_x2<a1)){
                         ++point;
                         circle_011_y_=-110;
@@ -447,6 +440,41 @@ void PointFunction(){
                         ++point;
                         circle_015_y_=-90;
                 }
+
+        else if(point == 50){
+            Game_State=false;
+        }
+}
+void TextSmall(char text[], float r, float g, float b, int x, int y, int z)
+{
+    glColor3f(r, g, b);
+    glRasterPos3f( x , y , z);
+    for(int i = 0; text[i] != '\0'; i++)
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, text[i]);
+}
+
+void TextLarge(char text[], int r, int g, int b, int x, int y, int z)
+{
+    glColor3f(r,g,b);
+    glRasterPos3f( x,y ,z);
+    for(int i = 0; text[i] != '\0'; i++)
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text[i]);
+}
+void End_Level(){
+
+        glClear(GL_COLOR_BUFFER_BIT);
+            glColor3f(0.1,0.9,0.9);
+            TextLarge("Game Over", 1.0, 0.1, 0.5, -8, 20, 0);
+
+            TextSmall("Press      to start the game", 0, 0, 1, -14, 5, 0);
+            TextSmall("S", 1, 0.4, 0.4, -7, 5, 0);
+
+            char SCORE[100];
+            itoa(point, SCORE, 10);
+            TextLarge(SCORE, 0, 0, 1, -3, -20, 0);
+
+        glFlush();
+
 }
 
 void display(void)
@@ -465,8 +493,8 @@ void display(void)
         printf("%d \n",point);
 	}
 	if(Game_State==false){
-        printf("%d ",point);
-        exit(0);
+
+        End_Level();
 	}
 	glFlush();
 }
