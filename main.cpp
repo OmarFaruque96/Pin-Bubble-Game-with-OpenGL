@@ -10,9 +10,11 @@
 
 using namespace std;
 
-int width=800,height=600;
+static int width=800,height=600;
 
-int point = 0;
+static int point = -1;
+
+static float TimeCount=0;
 //   $$$$$ Pin Area   $$$$$$
 // head circle
 float circle_xP=1.6,circle_yP=2.2;
@@ -21,7 +23,8 @@ float circle_XP=11.7,circle_YP=19.0,circle_ZP=0.0;
 
 // ###
 static float a1=0.0, b1=0.0;
-float x10,y10;
+
+float x10,y10;  //mouse area co ordinate
 //##########  circle size   ##########
 float circle_x1=4.0,circle_y1=5.5;
 float circle_x2=4.0,circle_y2=5.7;
@@ -32,10 +35,10 @@ float circle_x5=6.0,circle_y5=7.5;
 //########   circle color code    #######
 //#######################################//
 
-float circle_color_r1=0.10,circle_color_g1=0.08,circle_color_b1=0.99;
+float circle_color_r1=0.10,circle_color_g1=0.08,circle_color_b1=0.99;    //blue
 float circle_color_r2=0.20,circle_color_g2=0.90,circle_color_b2=0.20;
-float circle_color_r3=1.00,circle_color_g3=0.00,circle_color_b3=0.49;
-float circle_color_r4=0.50,circle_color_g4=1.00,circle_color_b4=0.00;
+float circle_color_r3=1.00,circle_color_g3=0.00,circle_color_b3=0.49;  //pink
+float circle_color_r4=0.50,circle_color_g4=1.00,circle_color_b4=0.00;  // yellow green
 float circle_color_r5=0.50,circle_color_g5=0.08,circle_color_b5=0.29;
 //&& game over bubble
 float circle_color_r6=1.0,circle_color_g6=0.0,circle_color_b6=0.0;
@@ -68,10 +71,10 @@ float circle_014_x_=-35.0,circle_014_y_=-105.0;
 float circle_015_x_=-45.0,circle_015_y_=-70.0;
 //game over stage
 
+FILE *scoreStore;
 
 bool Game_State=true;
-float angle = 0.0,angle2=0.0;
-float moving = 1.0;
+float angle = 0.0;
 
 void init(void)
 {
@@ -128,20 +131,20 @@ void bubble_Animate(){
         circle_03_y+=0.10;
         circle_04_y+=0.09;
         circle_011_y+=0.15;
-        circle_012_y+=0.08;
+        circle_012_y+=0.20;
         circle_013_y+=0.16;
-        circle_014_y+=0.05;
+        circle_014_y+=0.15;
         circle_015_y+=0.19;
 
         circle_01_y_+=0.19;
         circle_02_y_+=0.12;
         circle_03_y_+=0.16;
         circle_04_y_+=0.20;
-        circle_011_y_+=0.13;
+        circle_011_y_+=0.25;
         circle_012_y_+=0.19;
         circle_013_y_+=0.16;
         circle_014_y_+=0.13;
-        circle_015_y_+=0.08;
+        circle_015_y_+=0.15;
 
         if(circle_00_y>55){
             circle_00_y=-70;
@@ -336,6 +339,16 @@ void bubble_Position(){
 
 
 }
+
+void Timer(){
+    clock_t start;
+    start = clock();
+    TimeCount = (float)start/CLOCKS_PER_SEC;
+    if(TimeCount >= 120){
+        Game_State=false;
+    }
+}
+
 void PointFunction(){
 
         //middle
@@ -346,7 +359,7 @@ void PointFunction(){
 
     //1st row 1st right
         else if((circle_01_x+circle_x2 > a1) && (circle_01_y+circle_y2>b1) && (circle_01_y-circle_y2<b1) && (circle_01_x-circle_x2<a1)){
-                        ++point;
+                        point+=5;
                         circle_01_y=-90;
                 }
 //2nd
@@ -357,8 +370,8 @@ void PointFunction(){
 //3rd
         else if((circle_03_x+circle_x3 > a1) && (circle_03_y+circle_y3>b1) && (circle_03_y-circle_y3<b1) && (circle_03_x-circle_x3<a1)){
 
-                        //game over bubble
-                        Game_State=false;
+                        point-=2;
+                        circle_03_y=-160;
                 }
 //4th
         else if((circle_04_x+circle_x4 > a1) && (circle_04_y+circle_y4>b1) && (circle_04_y-circle_y4<b1) && (circle_04_x-circle_x4<a1)){
@@ -406,8 +419,8 @@ void PointFunction(){
                 }
 //3rd
         else if((circle_03_x_+circle_x4 > a1) && (circle_03_y_+circle_y4>b1) && (circle_03_y_-circle_y4<b1) && (circle_03_x_-circle_x4<a1)){
-                        //game over bubble
-                        Game_State=false;
+                        point-=2;
+                        circle_03_y_=-130;
                 }
 //4th
         else if((circle_04_x_+circle_x1 > a1) && (circle_04_y_+circle_y1>b1) && (circle_04_y_-circle_y1<b1) && (circle_04_x_-circle_x1<a1)){
@@ -417,7 +430,7 @@ void PointFunction(){
 //left
 //1st
         else if((circle_011_x_+circle_x2 > a1) && (circle_011_y_+circle_y2>b1) && (circle_011_y_-circle_y2<b1) && (circle_011_x_-circle_x2<a1)){
-                        ++point;
+                        point+=2;
                         circle_011_y_=-110;
                 }
 //2nd
@@ -437,13 +450,14 @@ void PointFunction(){
                 }
 //5th
         else if((circle_015_x_+circle_x3 > a1) && (circle_015_y_+circle_y3>b1) && (circle_015_y_-circle_y3<b1) && (circle_015_x_-circle_x3<a1)){
-                        ++point;
+                        point+=2;
                         circle_015_y_=-90;
                 }
 
-        else if(point == 50){
+        else if(point == 120){
             Game_State=false;
         }
+        Timer();
 }
 void TextSmall(char text[], float r, float g, float b, int x, int y, int z)
 {
@@ -460,18 +474,35 @@ void TextLarge(char text[], int r, int g, int b, int x, int y, int z)
     for(int i = 0; text[i] != '\0'; i++)
         glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text[i]);
 }
-void End_Level(){
 
+void FileWork(){
+    //file write from here
+            scoreStore=fopen("F:\\Education\\191\\Computer Graphics Lab\\Pin Bubble Game Project\\Score.text","a"); //append
+            //check for null
+            if(scoreStore == NULL){
+                printf("Error");
+            }else{
+                fprintf(scoreStore,"%d \n",point);
+            }
+            //close the file
+            fclose(scoreStore);
+}
+void End_Level(){
+        FileWork();
         glClear(GL_COLOR_BUFFER_BIT);
             glColor3f(0.1,0.9,0.9);
             TextLarge("Game Over", 1.0, 0.1, 0.5, -8, 20, 0);
+            TextLarge("Score is storing in the file", 0, 0, 1, -14, 5, 0);
 
-            TextSmall("Press      to start the game", 0, 0, 1, -14, 5, 0);
-            TextSmall("S", 1, 0.4, 0.4, -7, 5, 0);
+            TextLarge("Time :        SEC", 0, 0, 1, -14, -5 , 0);
+            char timeC[100];
+            itoa(TimeCount, timeC, 10);
+            TextLarge(timeC, 0, 0, 1, -4, -5 , 0);
 
             char SCORE[100];
             itoa(point, SCORE, 10);
             TextLarge(SCORE, 0, 0, 1, -3, -20, 0);
+            TextLarge("Score : ", 0, 0, 1, -12, -20, 0);
 
         glFlush();
 
@@ -484,19 +515,35 @@ void display(void)
 	if(Game_State == true){
 
         glPushMatrix();
+            Timer();
             PointFunction();
             bubble_Animate();
             bubble_Position();
             Pin(a1,b1);
         glPopMatrix();
 
-        printf("%d \n",point);
+        //printf("%d \n",point);
 	}
 	if(Game_State==false){
 
         End_Level();
 	}
 	glFlush();
+}
+void my_keyboard(unsigned char key, int x, int y)
+{
+	switch (key) {
+
+        case 's':
+            PlaySound("file_example_WAV_2MG.wav", NULL, SND_FILENAME| SND_ASYNC);
+            if(Game_State == true) {
+                point=0;
+            }
+            break;
+
+	  default:
+			break;
+	}
 }
 
 void my_mouse(int button, int state, int x, int y)
@@ -535,7 +582,7 @@ int main()
 	init();
 	glutDisplayFunc(display);
 	glutMouseFunc(my_mouse);
-    //glutKeyboardFunc(my_keyboard);
+    glutKeyboardFunc(my_keyboard);
 
 	glutMainLoop();
 	return 0;
