@@ -12,9 +12,13 @@ using namespace std;
 
 static int width=800,height=600;
 
-static int point = -1;
+static int point = 0;
 
 static float TimeCount=0;
+//Hill part circle position
+
+float h1=-45,k1=-43;
+
 //   $$$$$ Pin Area   $$$$$$
 // head circle
 float circle_xP=1.6,circle_yP=2.2;
@@ -78,7 +82,8 @@ float angle = 0.0;
 
 void init(void)
 {
-	glClearColor (0.3, 1.0, 1.0, 0.0);
+	glClearColor (0.28, 0.815, 0.80, 0.0);
+	//glClearColor (0.686, 0.93, 0.93, 0.0);
 	glOrtho(-50.0, 50.0, -50.0, 50.0, -50.0, 50.0);
 }
 
@@ -121,7 +126,167 @@ void Pin(float a1,float b1){
 
 
 }
+void Tree_View(float tx1,float tx2,float tx3){
+    //tree
+    //body
+    glPushMatrix();
+        glColor3f(0.13,0.52,0.13);
+        glTranslated(tx1,tx2,tx3);
+        glBegin(GL_POLYGON);
+            glVertex2f(-40.0,-42.0);
+            glVertex2f(-38.5,-19.0);
+            glVertex2f(-37.0,-42.0);
+            glVertex2f(-40.0,-42.0);
+        glEnd();
+    glPopMatrix();
+    // leaf
+    glPushMatrix();
+        glColor3f(0.13,0.52,0.13);
+        glTranslated(tx1,tx2,tx3);
+        //glScalef(2,1,0);
+        glBegin(GL_POLYGON);
+            glVertex2f(-38.5,-22.0);
+            glVertex2f(-40.5,-23.0);  //1
+            glVertex2f(-40.8,-24.0);  //2
+            glVertex2f(-41.2,-25.0);   //3
+            glVertex2f(-41.5,-26.0);  //4
 
+            glVertex2f(-41.7,-24.0);
+            glVertex2f(-41.5,-23.0);
+            glVertex2f(-41.3,-22.8);
+
+            glVertex2f(-41.8,-23.0);
+            glVertex2f(-42.1,-23.5);
+
+            glVertex2f(-42.1,-22.7);
+            glVertex2f(-41.9,-22.1);
+            glVertex2f(-41.4,-21.8);
+
+            glVertex2f(-41.6,-21.75);
+            glVertex2f(-41.9,-21.9);
+            glVertex2f(-42.3,-21.95);
+
+            glVertex2f(-42.0,-21.2);
+            glVertex2f(-41.8,-21.0);
+            glVertex2f(-41.5,-20.0);
+            glVertex2f(-41.0,-20.8);
+            glVertex2f(-40.5,-20.5);
+            glVertex2f(-40.0,-20.8);
+            glVertex2f(-39.8,-20.0);
+            glVertex2f(-39.72,-20.5);
+
+            glVertex2f(-38.5,-21.0);
+
+             glVertex2f(-38.5,-22.0);
+            glVertex2f(-36.5,-23.0);  //1
+            glVertex2f(-36.8,-24.0);  //2
+            glVertex2f(-35.2,-25.0);   //3
+            glVertex2f(-35.5,-26.0);  //4
+
+            glVertex2f(-35.7,-24.0);
+            glVertex2f(-35.5,-23.0);
+            glVertex2f(-35.3,-22.8);
+
+            glVertex2f(-35.8,-23.0);
+            glVertex2f(-34.1,-23.5);
+
+            glVertex2f(-34.1,-22.7);
+            glVertex2f(-35.9,-22.1);
+            glVertex2f(-35.4,-21.8);
+
+            glVertex2f(-35.6,-21.75);
+            glVertex2f(-35.9,-21.9);
+            glVertex2f(-34.3,-21.95);
+
+            glVertex2f(-34.0,-21.2);
+            glVertex2f(-35.8,-21.0);
+            glVertex2f(-35.5,-20.0);
+            glVertex2f(-35.0,-20.8);
+            glVertex2f(-36.5,-20.5);
+            glVertex2f(-36.0,-20.8);
+            glVertex2f(-37.8,-20.0);
+            glVertex2f(-37.72,-20.5);
+
+            glVertex2f(-38.5,-21.0);
+        glEnd();
+    glPopMatrix();
+}
+void background_view(){
+    glPushMatrix();
+        glColor3f(0.13,0.52,0.13);
+        glBegin(GL_POLYGON);
+            glVertex2f(-50,-45);
+            glVertex2f(50,-45);
+            glVertex2f(50,-50);
+            glVertex2f(-50,-50);
+        glEnd();
+    glPopMatrix();
+    //1st bubble
+    glPushMatrix();
+        glColor3f(0.13,0.52,0.13);
+        glTranslated(h1,k1,0);
+        circle(8,8);
+    glPopMatrix();
+    //2nd bubble
+    glPushMatrix();
+        glColor3f(0.13,0.52,0.13);
+        glTranslated(h1+13,k1,0);
+        circle(8,8);
+    glPopMatrix();
+    //3
+    //3rd bubble
+    glPushMatrix();
+        glColor3f(0.13,0.52,0.13);
+        glTranslated(h1+26,k1,0);
+        circle(8,8);
+    glPopMatrix();
+    //4th bubble
+    glPushMatrix();
+        glColor3f(0.13,0.52,0.13);
+        glTranslated(h1+39,k1,0);
+        circle(8,8);
+    glPopMatrix();
+    //5th bubble
+    glPushMatrix();
+        glColor3f(0.13,0.52,0.13);
+        glTranslated(h1+52,k1,0);
+        circle(8,8);
+    glPopMatrix();
+    //6th bubble
+    glPushMatrix();
+        glColor3f(0.13,0.52,0.13);
+        glTranslated(h1+66,k1,0);
+        circle(8,8);
+    glPopMatrix();
+    //6th bubble
+    glPushMatrix();
+        glColor3f(0.13,0.52,0.13);
+        glTranslated(h1+80,k1,0);
+        circle(8,8);
+    glPopMatrix();
+    //7th bubble
+    glPushMatrix();
+        glColor3f(0.13,0.52,0.13);
+        glTranslated(h1+93,k1,0);
+        circle(8,8);
+    glPopMatrix();
+    //8th bubble
+    glPushMatrix();
+        glColor3f(0.13,0.52,0.13);
+        glTranslated(h1+106,k1,0);
+        circle(8,8);
+    glPopMatrix();
+
+    Tree_View(0.0,0.0,0.0);
+    Tree_View(20.0,0.0,0.0);
+    Tree_View(30.0,-8.0,0.0);
+    Tree_View(45.0,0.0,0.0);
+    Tree_View(53.0,-10.0,0.0);
+    Tree_View(65.0,0.0,0.0);
+    Tree_View(80.0,-2.0,0.0);
+    //
+
+}
 void bubble_Animate(){
 
         circle_00_y+=0.06;
@@ -514,12 +679,14 @@ void display(void)
 
 	if(Game_State == true){
 
-        glPushMatrix();
+            glPushMatrix();
             Timer();
             PointFunction();
+
             bubble_Animate();
             bubble_Position();
             Pin(a1,b1);
+            background_view();
         glPopMatrix();
 
         //printf("%d \n",point);
@@ -535,9 +702,9 @@ void my_keyboard(unsigned char key, int x, int y)
 	switch (key) {
 
         case 's':
-            PlaySound("file_example_WAV_2MG.wav", NULL, SND_FILENAME| SND_ASYNC);
+           // PlaySound("file_example_WAV_2MG.wav", NULL, SND_FILENAME| SND_ASYNC);
             if(Game_State == true) {
-                point=0;
+               // point=0;
             }
             break;
 
